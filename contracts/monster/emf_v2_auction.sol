@@ -35,8 +35,8 @@ contract MineAuction {
         bidInc = _bidInc;
 
         // note: for testnet only
-        phraseOneDelay = 5 minutes;
-        phraseTwoDelay = 1 minutes;
+        phraseOneDelay = 12 hours;
+        phraseTwoDelay = 30 minutes;
     }
 
     modifier onlyOwner() {
@@ -53,6 +53,7 @@ contract MineAuction {
     }
 
     function bid(uint _charType, uint _tokenId, uint _amount) external {
+        // note: tokenId could be changed between biddings
         require(ended == false, "auc ended - ended");
         require(_amount >= highestBid + bidInc, "value < highest");
 
@@ -68,9 +69,9 @@ contract MineAuction {
             if (msg.sender != hero.ownerOf(_tokenId)) {
                 revert("wrong NFT owner");
             }
+        } else {
+            revert("wrong char type");
         }
-
-        require(msg.sender == mms2.ownerOf(_tokenId), "wrong ownner");  // note: tokenId could be changed between biddings
 
         if (phrase == 0) {  // start and go into phrase 1
             phrase = 1;
