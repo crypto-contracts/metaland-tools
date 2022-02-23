@@ -31,8 +31,8 @@ contract MineAuction {
         mms1 = IERC721(_m1);
         mms2 = IERC721(_m2);
 
-        highestBid = _startingBid;
-        bidInc = _bidInc;
+        highestBid = _startingBid * 10 ** 18;
+        bidInc = _bidInc * 10 ** 18;
 
         // note: for testnet only
         phraseOneDelay = 12 hours;
@@ -54,6 +54,7 @@ contract MineAuction {
 
     function bid(uint _charType, uint _tokenId, uint _amount) external {
         // note: tokenId could be changed between biddings
+        _amount = _amount * 10 ** 18;
         require(ended == false, "auc ended - ended");
         require(_amount >= highestBid + bidInc, "value < highest");
 
@@ -137,7 +138,7 @@ contract MineAuction {
         require(target != address(0), "invalid target");
         require(isAuctionEnd(), "auc not ended");
 
-        acceptableToken.transferFrom(address(this), target, highestBid);
+        acceptableToken.transfer(target, highestBid);
     }
 }
 
