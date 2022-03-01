@@ -35,7 +35,7 @@ contract MineAuction {
         bidInc = _bidInc * 10 ** 18;
 
         // note: for testnet only
-        phraseOneDelay = 12 hours;
+        phraseOneDelay = 48 hours;
         phraseTwoDelay = 30 minutes;
     }
 
